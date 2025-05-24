@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LAXSTORE JB</title>
+
+  <style>
+    @font-face {
+      font-family: 'UrbanJungle';
+      src: url('UrbanJungleDEMO.otf') format('opentype');
+    }
+
+    @font-face {
+      font-family: 'ComicBook';
+      src: url('Comic Book.otf') format('opentype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'ComicBook', sans-serif;
+      background: #1a001f;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: #1a001f;
+    }
+
+    #stars-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 20px;
+      min-height: 100vh;
+    }
+  
+    .music-visualizer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 3;
+    }
+  
+    .bar {
+    width: 5px;
+    height: 10px;
+    background: #a020f0;
+    animation: bounce 0.5s infinite ease-in-out alternate;
+    }
+  
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+  .bar:nth-child(3) { animation-delay: 0.2s; }
+  .bar:nth-child(4) { animation-delay: 0.3s; }
+  .bar:nth-child(5) { animation-delay: 0.4s; }
+  .bar:nth-child(6) { animation-delay: 0.5s; }
+  .bar:nth-child(7) { animation-delay: 0.4s; }
+  .bar:nth-child(8) { animation-delay: 0.3s; }
+  .bar:nth-child(9) { animation-delay: 0.2s; }
+  .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes bounce {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(2.2); }
+    }
+  
+    .glow-border {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow:
+      inset 0 0 20px #a020f0,
+      inset 0 0 40px #a020f0,
+      0 0 20px #a020f0,
+      0 0 40px #a020f0;
+    pointer-events: none;
+    z-index: 1;
+    animation: pulse-glow 3s infinite ease-in-out;
+    }
+  
+    @keyframes pulse-glow {
+    0%, 100% { box-shadow: inset 0 0 20px #a020f0, 0 0 20px #a020f0; }
+    50% { box-shadow: inset 0 0 40px #d166ff, 0 0 40px #d166ff; }
+    }
+
+    @keyframes glowWaves {
+      0% { text-shadow: 0 0 5px #a020f0, 0 0 10px #a020f0; }
+      50% { text-shadow: 0 0 15px #d166ff, 0 0 30px #d166ff; }
+      100% { text-shadow: 0 0 5px #a020f0, 0 0 10px #a020f0; }
+    }
+
+    .popup-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #a020f0;
+      margin-bottom: 20px;
+      box-shadow: 0 0 25px #a020f0;
+      transform: translateY(-30px);
+      position: relative;
+      z-index: 3;
+    }
+
+    .profile-container {
+      position: relative;
+      width: 151px;
+      height: 167px;
+      margin-bottom: 20px;
+      z-index: 3;
+    }
+
+    .profile-container::before {
+      content: '';
+      position: absolute;
+      top: -35px;
+      left: -5px;
+      width: 155px;
+      height: 155px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      box-shadow: 0 0 15px #a020f0, 0 0 30px #a020f0;
+      background: conic-gradient(from 0deg, #a020f0 0%, #d166ff 50%, #a020f0 100%);
+      animation: rotateBorder 3s linear infinite;
+      z-index: -1;
+      transform-origin: center;
+    }
+
+    @keyframes rotateBorder {
+     from { transform: rotate(0deg); }
+     to { transform: rotate(360deg); }
+    }
+
+   .subtext {
+     font-family: 'ComicBook', sans-serif;
+     font-size: 1em;
+     color: #ccc;
+     margin-top: -10px;
+     margin-bottom: 30px;
+     letter-spacing: 1px;
+     opacity: 0.85;
+   }
+
+    h1 {
+      font-family: 'UrbanJungle', sans-serif;
+      font-size: 3em;
+      color: #ffffff;
+      animation: glowWaves 2.5s infinite ease-in-out;
+      margin-top: -40px;
+      margin-bottom: 20px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .menu-button {
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      padding: 15px;
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: 0.2s;
+      text-shadow: 0 0 5px #000;
+    }
+
+    .menu-button:hover {
+      background: rgba(160, 32, 240, 0.9);
+      color: #fff;
+      box-shadow: 0 0 20px #a020f0, 0 0 40px #a020f0;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .popup-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      h1 {
+        font-size: 3em;
+      }
+
+      .menu-button {
+        font-size: 1em;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stars-js"></div>
+  <div id="particles-js"></div>
+  
+  <div class="glow-border"></div>
+  <div class="music-visualizer">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  </div>
+  
+    <div class="content">
+  <div class="profile-container">
+     <img id="logoImage" src="pp.jpg" alt="LAXSTORE" class="popup-image" />
+  </div>
+    <h1> 𓆩 LAXSTORE 𓆪</h1>
+  <p class="subtext">JUAL BELI AKUN BERGARANSI</p>
+
+    <div class="menu">
+      <div class="menu-button" onclick="openLink('https://wa.me/6285642962052')">
+         ADMIN JB/REKBER 
+      </div>
+      <div class="menu-button" onclick="openLink('https://www.instagram.com/laxstorejb?igsh=bWhjNW05YmFlbTZ1')">
+        ─ IG LAXSTORE JB ─
+      </div>
+      <div class="menu-button" onclick="openLink('https://chat.whatsapp.com/GXcIplJw8bj9V84zdl0uGP')">
+        ─ GC LAXSTORE JB ─
+      </div>
+      <div class="menu-button" onclick="openLink('https://whatsapp.com/channel/0029Vb68P2X0LKZLMC407404')">
+        ─ SL LAXSTORE JB ─
+      </div>
+      <div class="menu-button" onclick="openLink('https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012012023100406698750')">
+        ──── DONATE ────
+      </div>
+    </div>
+  </div>
+
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <audio id="bgMusic" src="musik.mp3" autoplay loop hidden></audio>
+
+  <script>
+    function openLink(url) {
+      const sound = document.getElementById('clickSound');
+      sound.pause();
+      sound.currentTime = 0;
+      sound.play();
+      window.open(url, '_blank');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 90, density: { enable: true, value_area: 700 } },
+        color: { value: "#a020f0" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 120,
+          color: "#a020f0",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 5,
+          direction: "none",
+          out_mode: "out"
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      music.play().catch(() => {
+        document.addEventListener('click', () => music.play(), { once: true });
+      });
+    });
+  </script>
+  
+  <script>
+  const logoImage = document.getElementById('logoImage');
+  const imageList = ['pp.jpg', 'pp2.jpg'];
+  let imageIndex = 0;
+
+  setInterval(() => {
+    imageIndex = (imageIndex + 1) % imageList.length;
+    logoImage.src = imageList[imageIndex];
+  }, 7000);
+  </script>
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    document.onkeydown = function(e) {
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) return false;
+      if (e.key === 'F12') return false;
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) return false;
+    };
+  </script>
+</body>
+</html>
